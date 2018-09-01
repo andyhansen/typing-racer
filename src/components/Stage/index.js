@@ -16,7 +16,7 @@ class Stage extends Component {
 
   state = {
     currentInput: '',
-    successfulCharacters: 0,
+    correctCharacters: 0,
     incorrectCharacters: 0,
   }
 
@@ -25,7 +25,7 @@ class Stage extends Component {
     const value = event.target.value
     const minLength = Math.min(typingChallenge.length, value.length)
 
-    let successfulCharacters = 0
+    let correctCharacters = 0
     let incorrectCharacters = 0
     let foundIncorrectCharacters = false
     for (let i = 0; i < minLength; i++) {
@@ -33,32 +33,32 @@ class Stage extends Component {
         value.charAt(i) === typingChallenge.charAt(i)
         && !foundIncorrectCharacters
       ) {
-        successfulCharacters++
+        correctCharacters++
       } else if (value.charAt(i) !== typingChallenge.charAt(i)) {
         incorrectCharacters++
         foundIncorrectCharacters = true
       }
     }
 
-    this.setState({ currentInput: value, successfulCharacters, incorrectCharacters })
+    this.setState({ currentInput: value, correctCharacters, incorrectCharacters })
   }
 
-  getSuccessfulInput = () => {
+  getCorrectInput = () => {
     const { typingChallenge } = this.props
-    const { successfulCharacters } = this.state
-    return typingChallenge.substr(0, successfulCharacters)
+    const { correctCharacters } = this.state
+    return typingChallenge.substr(0, correctCharacters)
   }
 
   getIncorrectInput = () => {
     const { typingChallenge } = this.props
-    const { successfulCharacters, incorrectCharacters } = this.state
-    return typingChallenge.substr(successfulCharacters, incorrectCharacters)
+    const { correctCharacters, incorrectCharacters } = this.state
+    return typingChallenge.substr(correctCharacters, incorrectCharacters)
   }
 
   getRemainingInput = () => {
     const { typingChallenge } = this.props
-    const { successfulCharacters, incorrectCharacters } = this.state
-    return typingChallenge.substr(successfulCharacters + incorrectCharacters)
+    const { correctCharacters, incorrectCharacters } = this.state
+    return typingChallenge.substr(correctCharacters + incorrectCharacters)
   }
 
   render() {
@@ -67,7 +67,7 @@ class Stage extends Component {
       <div className='typing-stage'>
         <h2>Enter the text below as fast as you can.</h2>
         <p className='challenge-text'>
-          <span className='successful-input'>{ this.getSuccessfulInput() }</span>
+          <span className='correct-input'>{ this.getCorrectInput() }</span>
           <span className='incorrect-input'>{ this.getIncorrectInput() }</span>
           <span>{ this.getRemainingInput() }</span>
         </p>
