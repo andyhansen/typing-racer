@@ -93,6 +93,7 @@
   },
   "devDependencies": {
     "node-sass": "^4.9.3",
+    "prop-types": "^15.6.2",
     "sass-loader": "^7.1.0"
   }
 }

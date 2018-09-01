@@ -4,7 +4,7 @@ import './Header.scss'
 
 export default function() {
   return (
-    <header class="typing-header">
+    <header className="typing-header">
       <h1>Typing Racer</h1>
     </header>
   )
