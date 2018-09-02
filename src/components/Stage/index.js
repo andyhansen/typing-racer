@@ -8,6 +8,7 @@ import Input from '../Input'
 class Stage extends Component {
   static propTypes = {
     typingChallenge: PropTypes.string.isRequired,
+    onChallengeComplete: PropTypes.func.isRequired,
   }
 
   state = {
@@ -36,7 +37,18 @@ class Stage extends Component {
       }
     }
 
-    this.setState({ currentInput: value, correctCharacters, incorrectCharacters })
+    const challengeComplete = typingChallenge.length === correctCharacters
+    if (challengeComplete) {
+      this.resetChallenge()
+    }
+    else {
+      this.setState({ currentInput: value, correctCharacters, incorrectCharacters })
+    }
+  }
+
+  resetChallenge = () => {
+    this.setState({ currentInput: '', correctCharacters: 0, incorrectCharacters: 0 })
+    this.props.onChallengeComplete()
   }
 
   getCorrectInput = () => {
@@ -58,7 +70,6 @@ class Stage extends Component {
   }
 
   render() {
-
     return (
       <div className='typing-stage'>
         <h2>Enter the text below as fast as you can.</h2>
