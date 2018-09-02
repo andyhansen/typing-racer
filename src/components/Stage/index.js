@@ -10,10 +10,6 @@ class Stage extends Component {
     typingChallenge: PropTypes.string.isRequired,
   }
 
-  static defaultProps = {
-    typingChallenge: "It's a bunch of text for you to start typing. How quickly can you do it!!",
-  }
-
   state = {
     currentInput: '',
     correctCharacters: 0,

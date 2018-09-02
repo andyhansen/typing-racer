@@ -5,12 +5,18 @@ import './TypingRacer.scss';
 import Header from '../Header'
 import Stage from '../Stage'
 
+import challenges from '../../challenges'
+
 class TypingRacer extends Component {
+  getRandomChallenge = () => {
+    return challenges[Math.floor(Math.random()*challenges.length)]
+  }
+
   render() {
     return (
       <div id="typing-racer">
         <Header />
-        <Stage />
+        <Stage typingChallenge={this.getRandomChallenge()}/>
       </div>
     );
   }
