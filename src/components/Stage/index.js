@@ -39,6 +39,7 @@ class Stage extends Component {
 
     const challengeComplete = typingChallenge.length === correctCharacters
     if (challengeComplete) {
+      this.props.onChallengeComplete()
       this.resetChallenge()
     }
     else {
@@ -48,7 +49,6 @@ class Stage extends Component {
 
   resetChallenge = () => {
     this.setState({ currentInput: '', correctCharacters: 0, incorrectCharacters: 0 })
-    this.props.onChallengeComplete()
   }
 
   getCorrectInput = () => {
