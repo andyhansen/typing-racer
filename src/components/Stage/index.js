@@ -41,8 +41,7 @@ class Stage extends Component {
     if (challengeComplete) {
       this.props.onChallengeComplete()
       this.resetChallenge()
-    }
-    else {
+    } else {
       this.setState({ currentInput: value, correctCharacters, incorrectCharacters })
     }
   }
