@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
-import './TypingRacer.scss';
+import './TypingRacer.scss'
 
 import Header from '../Header'
 import Stage from '../Stage'
@@ -18,17 +18,17 @@ class TypingRacer extends Component {
     })
   }
 
-  render() {
+  render () {
     return (
       <div id="typing-racer">
         <Header />
-        <Stage 
+        <Stage
           typingChallenge={this.state.currentChallenge}
           onChallengeComplete={this.onChallengeComplete}
         />
       </div>
-    );
+    )
   }
 }
 
-export default TypingRacer;
+export default TypingRacer

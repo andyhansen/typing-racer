@@ -27,8 +27,8 @@ class Stage extends Component {
     let foundIncorrectCharacters = false
     for (let i = 0; i < minLength; i++) {
       if (
-        value.charAt(i) === typingChallenge.charAt(i)
-        && !foundIncorrectCharacters
+        value.charAt(i) === typingChallenge.charAt(i) &&
+        !foundIncorrectCharacters
       ) {
         correctCharacters++
       } else if (value.charAt(i) !== typingChallenge.charAt(i)) {
@@ -68,7 +68,7 @@ class Stage extends Component {
     return typingChallenge.substr(correctCharacters + incorrectCharacters)
   }
 
-  render() {
+  render () {
     return (
       <div className='typing-stage'>
         <h2>Enter the text below as fast as you can.</h2>
