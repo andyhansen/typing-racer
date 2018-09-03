@@ -1,0 +1,10 @@
+{
+    "extends": [
+        "standard",
+        "react-app"
+    ],
+    "parser": "babel-eslint",
+    "rules": {
+        "comma-dangle": ["error", "only-multiline"]
+    }
+}
