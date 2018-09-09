@@ -69,6 +69,10 @@ class TypingChallengeService {
       }
     }
 
+    if (currentInput.length > currentChallengeWord.length) {
+      incorrectCharacters += currentInput.length - currentChallengeWord.length
+    }
+
     const challengeWordComplete = currentChallengeWord.length === correctCharacters
     if (challengeWordComplete) {
       this.currentWordIndex++
@@ -85,20 +89,32 @@ class TypingChallengeService {
       this.currentIncorrectCharacters = incorrectCharacters
     }
 
-    console.log(this)
     return challengeWordComplete
   }
 
+  isChallengeComplete() {
+    return this.isCurrentChallengeComplete
+  }
+
   getCorrectInput() {
-    return this.rawTypingChallenge.substr(0, this.totalCorrectCharacters)
+    return this.rawTypingChallenge
+      .substr(0, this.totalCorrectCharacters + this.currentCorrectCharacters)
   }
 
   getIncorrectInput() {
-    return this.rawTypingChallenge.substr(this.totalCorrectCharacters, this.totalIncorrectCharaters)
+    return this.rawTypingChallenge
+      .substr(
+        this.totalCorrectCharacters + this.currentCorrectCharacters,
+        this.totalIncorrectCharaters + this.currentIncorrectCharacters
+      )
   }
 
   getRemainingInput() {
-    return this.rawTypingChallenge.substr(this.totalCorrectCharacters + this.totalIncorrectCharaters)
+    return this.rawTypingChallenge
+      .substr(
+        this.totalCorrectCharacters + this.currentCorrectCharacters + 
+        this.totalIncorrectCharaters + this.currentIncorrectCharacters
+      )
   }
 }
 
