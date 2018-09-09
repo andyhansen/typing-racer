@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import './Stage.scss'
+import TypingChallengeService from '../../services/TypingChallengeService'
 
+import './Stage.scss'
 import Input from '../Input'
 
 class Stage extends Component {
@@ -15,67 +16,41 @@ class Stage extends Component {
     currentInput: '',
     correctCharacters: 0,
     incorrectCharacters: 0,
+    challengeService: new TypingChallengeService()
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    state.challengeService.setChallenge(props.typingChallenge)
+    return null
   }
 
   updatedInput = (event) => {
-    const { typingChallenge } = this.props
+    const { challengeService } = this.state 
     const value = event.target.value
-    const minLength = Math.min(typingChallenge.length, value.length)
 
-    let correctCharacters = 0
-    let incorrectCharacters = 0
-    let foundIncorrectCharacters = false
-    for (let i = 0; i < minLength; i++) {
-      if (
-        value.charAt(i) === typingChallenge.charAt(i) &&
-        !foundIncorrectCharacters
-      ) {
-        correctCharacters++
-      } else if (value.charAt(i) !== typingChallenge.charAt(i)) {
-        incorrectCharacters++
-        foundIncorrectCharacters = true
-      }
-    }
-
-    const challengeComplete = typingChallenge.length === correctCharacters
-    if (challengeComplete) {
-      this.props.onChallengeComplete()
-      this.resetChallenge()
+    const isWordComplete = challengeService.updateProgress(value)
+    if (!isWordComplete) {
+      this.setState({ currentInput: value })
     } else {
-      this.setState({ currentInput: value, correctCharacters, incorrectCharacters })
+      this.setState({ currentInput: '' })
     }
   }
 
   resetChallenge = () => {
-    this.setState({ currentInput: '', correctCharacters: 0, incorrectCharacters: 0 })
-  }
-
-  getCorrectInput = () => {
-    const { typingChallenge } = this.props
-    const { correctCharacters } = this.state
-    return typingChallenge.substr(0, correctCharacters)
-  }
-
-  getIncorrectInput = () => {
-    const { typingChallenge } = this.props
-    const { correctCharacters, incorrectCharacters } = this.state
-    return typingChallenge.substr(correctCharacters, incorrectCharacters)
-  }
-
-  getRemainingInput = () => {
-    const { typingChallenge } = this.props
-    const { correctCharacters, incorrectCharacters } = this.state
-    return typingChallenge.substr(correctCharacters + incorrectCharacters)
+    this.setState({ currentInput: '' })
+    this.props.onChallengeComplete()
   }
 
   render () {
+    const { challengeService } = this.state
+
     return (
       <div className='typing-stage'>
         <h2>Enter the text below as fast as you can.</h2>
         <p className='challenge-text'>
-          <span className='correct-input'>{ this.getCorrectInput() }</span>
-          <span className='incorrect-input'>{ this.getIncorrectInput() }</span>
-          <span>{ this.getRemainingInput() }</span>
+          <span className='correct-input'>{ challengeService.getCorrectInput() }</span>
+          <span className='incorrect-input'>{ challengeService.getIncorrectInput() }</span>
+          <span>{ challengeService.getRemainingInput() }</span>
         </p>
         <Input
           onChange={this.updatedInput}

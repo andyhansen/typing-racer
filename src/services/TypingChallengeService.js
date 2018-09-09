@@ -5,8 +5,9 @@
  */
 class TypingChallengeService {
   constructor (typingChallenge) {
-    this.currentInput = ''
-    this.setNewChallenge(typingChallenge)
+    if (typingChallenge) {
+      this.setChallenge(typingChallenge)
+    }
   }
 
   /**
@@ -14,7 +15,10 @@ class TypingChallengeService {
    * the next challenge
    * @param {string} typingChallenge 
    */
-  setNewChallenge(typingChallenge) {
+  setChallenge(typingChallenge) {
+    if (this.rawTypingChallenge == typingChallenge) {
+      return false
+    }
     this.rawTypingChallenge = typingChallenge
     this.challengeWordArray = 
       typingChallenge
@@ -30,13 +34,15 @@ class TypingChallengeService {
     this.currentCorrectCharacters = 0
     this.currentIncorrectCharacters = 0
     this.isCurrentChallengeComplete = false
+
+    return true
   }
 
   /**
    * Get the word which is currently being tested
    */
   currentWord() {
-    this.challengeWordArray[this.currentWordIndex]
+    return this.challengeWordArray[this.currentWordIndex]
   }
 
   /**
@@ -78,6 +84,21 @@ class TypingChallengeService {
       this.currentCorrectCharacters = correctCharacters
       this.currentIncorrectCharacters = incorrectCharacters
     }
+
+    console.log(this)
+    return challengeWordComplete
+  }
+
+  getCorrectInput() {
+    return this.rawTypingChallenge.substr(0, this.totalCorrectCharacters)
+  }
+
+  getIncorrectInput() {
+    return this.rawTypingChallenge.substr(this.totalCorrectCharacters, this.totalIncorrectCharaters)
+  }
+
+  getRemainingInput() {
+    return this.rawTypingChallenge.substr(this.totalCorrectCharacters + this.totalIncorrectCharaters)
   }
 }
 
