@@ -33,11 +33,13 @@ class Stage extends Component {
       this.setState({ currentInput: value })
     } else {
       this.setState({ currentInput: '' })
+      if (challengeService.isChallengeComplete()) {
+        this.resetChallenge()
+      }
     }
   }
 
   resetChallenge = () => {
-    this.setState({ currentInput: '' })
     this.props.onChallengeComplete()
   }
 
