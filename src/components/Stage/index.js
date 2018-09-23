@@ -19,13 +19,13 @@ class Stage extends Component {
     challengeService: new TypingChallengeService()
   }
 
-  static getDerivedStateFromProps(props, state) {
+  static getDerivedStateFromProps (props, state) {
     state.challengeService.setChallenge(props.typingChallenge)
     return null
   }
 
   updatedInput = (event) => {
-    const { challengeService } = this.state 
+    const { challengeService } = this.state
     const value = event.target.value
 
     const isWordComplete = challengeService.updateProgress(value)
