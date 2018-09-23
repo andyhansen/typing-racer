@@ -63,7 +63,10 @@ class TypingChallengeService {
         !foundIncorrectCharacters
       ) {
         correctCharacters++
-      } else if (currentInput.charAt(i) !== currentChallengeWord.charAt(i)) {
+      } else if (
+          currentInput.charAt(i) !== currentChallengeWord.charAt(i) ||
+          foundIncorrectCharacters
+        ) {
         incorrectCharacters++
         foundIncorrectCharacters = true
       }
